@@ -24,7 +24,7 @@ const App = () => {
     const quantity = item?.quantity || 1
     const unit = item?.unit || 'kg'
     const message = `Hi! I'd like to order ${quantity} ${unit} of ${itemName} from Sowmya's Cakes and Bakes.`
-    const whatsappUrl = `https://wa.me/7975389968?text=${encodeURIComponent(message)}`
+    const whatsappUrl = `https://wa.me/9148381900?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, '_blank')
   }
 

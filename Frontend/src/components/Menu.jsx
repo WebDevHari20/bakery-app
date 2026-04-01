@@ -6,7 +6,7 @@ const Menu = ({ onOpenCatalogue }) => {
   const [showFullMenu, setShowFullMenu] = useState(false)
   const [quantities, setQuantities] = useState({})
 
-  const WHATSAPP_NUMBER = "7975389968" 
+  const WHATSAPP_NUMBER = "9148381900"
 
   const updateQty = (id, delta) => {
     setQuantities(prev => ({

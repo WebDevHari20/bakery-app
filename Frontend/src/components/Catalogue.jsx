@@ -22,7 +22,7 @@ const Catalogue = ({ allItems = catalogueItems, onOrder, onClose }) => {
     }
 
     const message = `Hi! I'd like to order ${qty} ${unit} of ${item?.name || 'Custom Cake'} from Sowmya's Cakes and Bakes.`
-    const whatsappUrl = `https://wa.me/7975389968?text=${encodeURIComponent(message)}`
+    const whatsappUrl = `https://wa.me/9148381900?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, '_blank')
   }
 

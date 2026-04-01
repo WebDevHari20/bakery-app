@@ -10,7 +10,7 @@ const Contact = () => {
   const handleWhatsApp = (e) => {
     e.preventDefault()
     // This creates a direct link to WhatsApp with a pre-filled message
-    const phoneNumber = "7975389968" // Replace with your mother's phone number
+    const phoneNumber = "9148381900" // Replace with your mother's phone number
     const text = `Hi Sowmya's Cakes and Bakes! My name is ${formData.name}. I'm interested in: ${formData.message}`
     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`, '_blank')
   }
