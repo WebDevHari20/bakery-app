@@ -41,7 +41,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className='font-bold text-neutral-900'>Location</h4>
-                  <p className='text-sm text-neutral-500 sm:text-base'>////////////</p>
+                  <p className='text-sm text-neutral-500 sm:text-base'>Muniveerappa colony anekal... opposite to police station road</p>
                 </div>
               </div>
 
