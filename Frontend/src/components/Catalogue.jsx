@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react' // 1. Added useRef here
 import gsap from 'gsap'
 import catalogueItems from '../data/catalogueItems'
 
 const Catalogue = ({ allItems = catalogueItems, onOrder, onClose }) => {
   const [quantities, setQuantities] = useState({})
+  const containerRef = useRef(null) // 2. Created the ref
 
   useEffect(() => {
+    // 3. Check if containerRef.current exists before running animation
+    if (!containerRef.current) return;
+
     const ctx = gsap.context(() => {
       gsap.from('.gallery-item', {
         y: 30,
@@ -14,7 +18,8 @@ const Catalogue = ({ allItems = catalogueItems, onOrder, onClose }) => {
         stagger: 0.1,
         ease: 'power4.out',
       })
-    }, containerRef)
+    }, containerRef) // Logic is scoped to this ref
+
     return () => ctx.revert()
   }, [])
 
@@ -57,12 +62,13 @@ const Catalogue = ({ allItems = catalogueItems, onOrder, onClose }) => {
   }
 
   return (
-    <div className='min-h-screen bg-[#08080a] py-16 px-6 text-white selection:bg-yellow-500 selection:text-black lg:py-24 lg:px-16'>
+    // 4. Added ref={containerRef} here. This is the most important fix!
+    <div ref={containerRef} className='min-h-screen bg-[#08080a] py-10 px-6 text-white selection:bg-yellow-500 selection:text-black lg:py-24 lg:px-16'>
       <div className='mx-auto max-w-7xl'>
         
         {/* HEADER */}
-        <header className='gallery-header mb-16 flex flex-col items-start justify-between gap-10 lg:mb-24 lg:flex-row lg:items-end'>
-          <div className='space-y-6'>
+        <header className='gallery-header mb-16 flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-end'>
+          <div className='space-y-5'>
             <button 
               onClick={onClose}
               className='group flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.4em] text-neutral-500 hover:text-yellow-400 transition-colors'
@@ -81,7 +87,7 @@ const Catalogue = ({ allItems = catalogueItems, onOrder, onClose }) => {
           </div>
           
           <div className='max-w-xs lg:text-right'>
-            <p className='text-[10px] font-bold uppercase tracking-widest text-neutral-500 mb-2'>Volume 01 // 2026</p>
+            <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-500 mb-2'>Volume 01 // 2026</p>
             <p className='text-sm text-neutral-400 uppercase tracking-tighter'>
               A selection of our finest eggless creations.
             </p>
@@ -93,7 +99,6 @@ const Catalogue = ({ allItems = catalogueItems, onOrder, onClose }) => {
           {allItems.map((item) => (
             <div key={item.id} className='gallery-item group relative overflow-hidden rounded-2xl bg-neutral-900 border border-white/5'>
               
-              {/* SMALLER IMAGE CONTAINER: aspect-video instead of aspect-[4/5] */}
               <div className='aspect-video overflow-hidden sm:aspect-square lg:aspect-video'>
                 <img 
                   src={item.image} 
@@ -102,7 +107,6 @@ const Catalogue = ({ allItems = catalogueItems, onOrder, onClose }) => {
                 />
               </div>
 
-              {/* Simple Details Overlay */}
               <div className='absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/40 to-transparent p-6'>
                 <div className='space-y-4'>
                   <div className='flex justify-between items-end'>
@@ -115,10 +119,9 @@ const Catalogue = ({ allItems = catalogueItems, onOrder, onClose }) => {
                     </div>
                   </div>
 
-                  {/* CONTROLS: Hidden on Desktop Hover, Visible on Mobile */}
                   <div className='flex items-center gap-3 transition-all duration-500 lg:opacity-0 lg:translate-y-2 lg:group-hover:opacity-100 lg:group-hover:translate-y-0'>
                     <div className='flex items-center gap-3 rounded-full bg-white/5 px-3 py-1.5 border border-white/10 backdrop-blur-md'>
-                      <button onClick={() => updateQty(item.id, -1)} className='text-base font-bold hover:text-yellow-500 transition-colors'>-</button>
+                      <button onClick={() => updateQty(item.id, -1)} className='text-base font-bold hover:text-yellow-400 transition-colors'>-</button>
                       <span className='min-w-[35px] text-center text-[9px] font-black uppercase tracking-widest'>
                         {quantities[item.id] || 1} {item.category === 'Cupcakes' ? 'pcs' : 'kg'}
                       </span>
