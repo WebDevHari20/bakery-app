@@ -97,8 +97,8 @@ const Home = ({ onOpenCatalogue }) => {
             
             <h1 className='reveal-text text-[clamp(3.5rem,10vw,7rem)] font-black uppercase leading-[0.78] tracking-tighter'>
               SOWMYA'S <br />
-              <span className='italic text-transparent' style={{ WebkitTextStroke: '1px rgba(255,255,255,0.4)' }}>PURE</span> <br />
-              <span className='text-yellow-400'>BAKES.</span>
+              <span className='italic text-transparent' style={{ WebkitTextStroke: '1px rgba(255,255,255,0.4)' }}>BAKES &</span> <br />
+              <span className='text-yellow-400'>CAKES</span>
             </h1>
 
             <p className='reveal-text mt-6 max-w-md text-sm font-medium leading-relaxed text-neutral-400 md:text-base'>
