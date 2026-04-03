@@ -102,7 +102,7 @@ const Home = ({ onOpenCatalogue }) => {
             </h1>
 
             <p className='reveal-text mt-6 max-w-md text-sm font-medium leading-relaxed text-neutral-400 md:text-base'>
-              Handcrafted 100% eggless artisan desserts for special moments. 
+              Hand made 100% eggless artisan desserts for special moments. 
               Fresh ingredients, mother's love, delivered to your door.
             </p>
 
