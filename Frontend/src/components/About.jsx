@@ -1,64 +1,127 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
+import gsap from 'gsap'
 
 const About = () => {
+  const sectionRef = useRef(null)
+
+  // Swapped for more "Appetizing" and professional high-contrast cake shots
+  const images = {
+    process: "https://images.unsplash.com/photo-1557925923-33b27f891f88?q=80&w=800&auto=format&fit=crop", // Close up of premium textures
+    featureCake: "https://images.unsplash.com/photo-1535141192574-5d4897c12636?q=80&w=800&auto=format&fit=crop" // Stunning Finished Cake
+  }
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.about-reveal', {
+        y: 60,
+        opacity: 0,
+        duration: 1.4,
+        stagger: 0.15,
+        ease: 'power4.out',
+      })
+
+      gsap.to('.cake-secondary', {
+        y: '-=15',
+        repeat: -1,
+        yoyo: true,
+        duration: 3,
+        ease: 'power1.inOut'
+      })
+    }, sectionRef)
+    
+    return () => ctx.revert()
+  }, [])
+
+  const handleLearnMore = () => {
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
-    <section className='relative overflow-hidden bg-white py-14 px-4 sm:py-20 sm:px-6 lg:px-16'>
-      <div className='mx-auto max-w-7xl'>
-        <div className='flex flex-col items-center gap-10 sm:gap-12 lg:flex-row lg:gap-20'>
+    <section 
+      id="about" 
+      ref={sectionRef} 
+      className='relative min-h-screen overflow-hidden bg-[#0a0a0c] py-24 px-6 lg:px-16'
+    >
+      <div className='absolute -right-32 top-1/4 h-[500px] w-[500px] rounded-full bg-yellow-500/5 blur-[120px]'></div>
+
+      <div className='relative z-10 mx-auto max-w-[1440px]'>
+        <div className='grid grid-cols-1 items-center gap-16 lg:grid-cols-12 lg:gap-24'>
           
-          {/* Left Side: Image/Visual (Replace src with a real cake photo later) */}
-          <div className='relative w-full lg:w-1/2'>
-            <div className='absolute -top-3 -left-3 h-full w-full rounded-2xl bg-yellow-500/10 sm:-top-4 sm:-left-4'></div>
-            <div className='relative overflow-hidden rounded-2xl bg-neutral-100 shadow-2xl'>
-              <img 
-                src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1000&auto=format&fit=crop" 
-                alt="Signature Cake" 
-                className='h-72 w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-full'
-              />
+          {/* LEFT: Cinematic Image Bento Grid */}
+          <div className='about-reveal relative h-[600px] lg:col-span-5'>
+            <div className='absolute inset-0 h-full w-[85%] overflow-hidden rounded-[2.5rem] bg-neutral-900 shadow-2xl'>
+               <img 
+                src={images.process} 
+                alt="Baking Process" 
+                className='h-full w-full object-cover mix-blend-luminosity grayscale-[0.2]' 
+               />
+               <div className='absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent'></div>
             </div>
-            {/* Experience Badge */}
-            <div className='absolute -bottom-6 -right-6 hidden rounded-xl bg-neutral-900 p-6 text-white shadow-xl sm:block'>
-              <p className='text-3xl font-black text-yellow-400'>100%</p>
-              <p className='text-[10px] font-bold uppercase tracking-widest text-neutral-400'>Fresh & Handmade</p>
+
+            <div className='absolute bottom-10 right-0 h-[60%] w-[50%] rounded-[2rem] border border-white/10'></div>
+
+            <div className='cake-secondary absolute -bottom-6 right-0 aspect-[4/5] w-[60%] overflow-hidden rounded-[2rem] bg-neutral-900 shadow-2xl shadow-black/60'>
+               <img 
+                src={images.featureCake} 
+                alt="Signature Cake" 
+                className='h-full w-full object-cover transition-transform duration-1000 hover:scale-110' 
+               />
+            </div>
+
+            {/* Experience Floating Badge */}
+            <div className='cake-secondary absolute -bottom-10 right-4 rounded-3xl border border-white/10 bg-black/80 p-8 backdrop-blur-xl shadow-2xl'>
+              <p className='text-4xl font-black text-yellow-400 leading-none'>100%</p>
+              <p className='mt-2 text-[9px] font-black uppercase tracking-[0.3em] text-neutral-300'>
+                Pure <br /> Eggless
+              </p>
             </div>
           </div>
 
-          {/* Right Side: Content */}
-          <div className='flex w-full flex-col items-center text-center lg:w-1/2 lg:items-start lg:text-left'>
-            <span className='text-xs font-bold uppercase tracking-[0.2em] text-yellow-600 sm:text-sm'>
-              The Heart of our Kitchen
-            </span>
-            <h2 className='mt-3 text-3xl font-black uppercase tracking-tighter text-neutral-900 sm:mt-4 sm:text-5xl lg:text-6xl'>
-              Baked with <br />
-              <span className='text-yellow-500'>Mother's Love</span>
-            </h2>
+          {/* RIGHT: Content */}
+          <div className='about-reveal lg:col-span-7 space-y-12 lg:pl-10'>
+            <div className='space-y-4'>
+              <div className='flex items-center gap-4'>
+                <span className='h-[1px] w-12 bg-yellow-500'></span>
+                <p className='text-[10px] font-black uppercase tracking-[0.6em] text-yellow-500'>OUR STORY</p>
+              </div>
+              <h2 className='text-[clamp(3rem,8vw,5.5rem)] font-black uppercase leading-[0.82] tracking-tighter text-white'>
+                BAKED <br /> WITH <br />
+                <span className='italic text-transparent' style={{ WebkitTextStroke: '1px rgba(255,255,255,0.45)' }}>PURE</span> <br />
+                <span className='text-yellow-400'>HONESTY.</span>
+              </h2>
+            </div>
             
-            <div className='mt-6 space-y-5 text-sm leading-relaxed text-neutral-600 sm:mt-8 sm:space-y-6 sm:text-lg'>
-              <p>
-                At <strong>Sowmya's Cakes and Bakes</strong>, we believe that the best treats aren't just made with flour and sugar—they're made with passion and precision. What started as a small home kitchen experiment has grown into a destination for premium, handcrafted desserts.
-              </p>
-              <p>
-                Every cake we bake is a masterpiece designed specifically for your special moments. From birthdays to weddings, we use only the finest ingredients to ensure that every bite is as magical as the celebration itself.
-              </p>
+            <div className='max-w-xl space-y-6 text-base font-medium leading-relaxed text-neutral-400 sm:text-lg lg:text-xl'>
+              <p>At <span className='text-white'>Sowmya's Cakes and Bakes</span>, we specialize in <strong>100% Eggless</strong> artisanal desserts that never compromise on texture or taste. What began as a home kitchen experiment has evolved into a trusted name for premium, guilt-free treats in Bengaluru.</p>
+              <p>We believe great baking comes from pure ingredients. By focusing on egg-free recipes, we ensure our cakes are inclusive, incredibly soft, and packed with honest flavors.</p>
             </div>
 
-            {/* Feature List */}
-            <div className='mt-8 grid w-full grid-cols-1 gap-5 border-t border-neutral-100 pt-8 sm:mt-10 sm:grid-cols-2 sm:gap-6 sm:pt-10'>
-              <div className='flex flex-col items-center text-center sm:items-start sm:text-left'>
-                <h4 className='text-sm font-black uppercase tracking-wider text-neutral-900'>Premium Quality</h4>
-                <p className='mt-1 text-xs text-neutral-500 font-medium'>No preservatives, just pure ingredients.</p>
+            <div className='grid grid-cols-1 gap-6 pt-10 border-t border-white/5 sm:grid-cols-2'>
+              <div className='space-y-2'>
+                <h4 className='text-xs font-black uppercase tracking-widest text-white'>100% Eggless</h4>
+                <p className='text-xs text-neutral-500'>Strictly egg-free kitchen. Perfect for vegetarians and those with allergies.</p>
               </div>
-              <div className='flex flex-col items-center text-center sm:items-start sm:text-left'>
-                <h4 className='text-sm font-black uppercase tracking-wider text-neutral-900'>Custom Designs</h4>
-                <p className='mt-1 text-xs text-neutral-500 font-medium'>Your vision, baked into reality.</p>
+              <div className='space-y-2'>
+                <h4 className='text-xs font-black uppercase tracking-widest text-white'>Bespoke Designs</h4>
+                <p className='text-xs text-neutral-500'>Custom themes and messages, baked fresh specifically for your order.</p>
               </div>
             </div>
 
-            <button className='mt-10 w-full rounded-full border-2 border-neutral-900 bg-neutral-900 px-6 py-3 text-[11px] font-black uppercase tracking-widest text-white transition-all hover:bg-transparent hover:text-neutral-900 sm:mt-12 sm:w-auto sm:px-10 sm:py-4 sm:text-xs'>
-              Learn More About Us
+            <button 
+              onClick={handleLearnMore}
+              className='group relative flex items-center gap-6 overflow-hidden rounded-full bg-white px-10 py-5 text-black transition-all hover:bg-yellow-400 active:scale-95'
+            >
+              <span className='text-[11px] font-black uppercase tracking-widest'>Learn More</span>
+              <div className='h-2 w-2 rounded-full bg-black transition-all group-hover:w-12 flex items-center justify-center overflow-hidden'>
+                <svg className='h-4 w-4 opacity-0 group-hover:opacity-100' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='3' d='M17 8l4 4m0 0l-4 4m4-4H3' />
+                </svg>
+              </div>
             </button>
           </div>
-
         </div>
       </div>
     </section>

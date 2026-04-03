@@ -8,7 +8,7 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 
 const App = () => {
-  const isCataloguePage = window.location.pathname === '/catalogue'
+  const isCataloguePage = window.location.pathname.startsWith('/catalogue')
 
   const handleOpenCatalogue = () => {
     const catalogueUrl = new URL('/catalogue', window.location.origin)
@@ -19,34 +19,28 @@ const App = () => {
     window.location.href = '/'
   }
 
-  const handleCatalogueOrder = (item) => {
-    const itemName = item?.name || 'Custom Cake'
-    const quantity = item?.quantity || 1
-    const unit = item?.unit || 'kg'
-    const message = `Hi! I'd like to order ${quantity} ${unit} of ${itemName} from Sowmya's Cakes and Bakes.`
-    const whatsappUrl = `https://wa.me/9148381900?text=${encodeURIComponent(message)}`
-    window.open(whatsappUrl, '_blank')
-  }
-
   if (isCataloguePage) {
     return (
-      <div className='relative min-h-screen w-full overflow-x-hidden bg-[#faf9f6]'>
-        <Catalogue onOrder={handleCatalogueOrder} onClose={handleBackToHome} />
+      <div className='relative min-h-screen w-full overflow-x-hidden bg-[#08080a] text-white selection:bg-yellow-500 selection:text-black'>
+        <Catalogue onClose={handleBackToHome} />
       </div>
     )
   }
 
   return (
-    <div className='relative w-full overflow-x-hidden bg-black'>
-      <div className='fixed top-0 left-0 z-50 w-full'>
+    <div className='relative w-full overflow-x-hidden bg-[#0a0a0c] selection:bg-yellow-500 selection:text-black'>
+      
+      {/* GLOBAL NAVIGATION: Highest Z-Index (9999) */}
+      <header className='fixed top-0 left-0 z-[9999] w-full'>
         <Nav />
-      </div>
+      </header>
 
+      {/* SECTIONS */}
       <section id='home'>
-        <Home />
+        <Home onOpenCatalogue={handleOpenCatalogue} />
       </section>
 
-      <section id='menu'>
+      <section id='menu' className='bg-[#faf9f6]'>
         <Menu onOpenCatalogue={handleOpenCatalogue} />
       </section>
 
